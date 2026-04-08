@@ -1,0 +1,71 @@
+<div class="admin-page">
+  @if (!isAuthenticated) {
+    <div class="login-container">
+      <div class="login-card">
+        <h2 class="login-title">Admin Login</h2>
+        <form [formGroup]="loginForm" (ngSubmit)="onLogin()">
+          <div class="form-group">
+            <label for="username">Username</label>
+            <input
+              id="username"
+              type="text"
+              formControlName="username"
+              placeholder="Enter username"
+              class="form-input"
+            />
+          </div>
+          <div class="form-group">
+            <label for="password">Password</label>
+            <input
+              id="password"
+              type="password"
+              formControlName="password"
+              placeholder="Enter password"
+              class="form-input"
+            />
+          </div>
+          @if (errorMessage) {
+            <div class="error-message">{{ errorMessage }}</div>
+          }
+          <button type="submit" class="login-button">Login</button>
+        </form>
+      </div>
+    </div>
+  } @else {
+    <div class="dashboard-container">
+      <div class="dashboard-header">
+        <h2 class="dashboard-title">Admin Dashboard</h2>
+        <button class="logout-button" (click)="onLogout()">Logout</button>
+      </div>
+
+      <div class="stats-row">
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.total }}</div>
+          <div class="stat-label">Total Submissions</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.departments }}</div>
+          <div class="stat-label">Departments</div>
+        </div>
+        <div class="stat-card">
+          <div class="stat-value">{{ stats.latest ? (stats.latest.submittedAt | date:'shortDate') : 'N/A' }}</div>
+          <div class="stat-label">Latest Submission</div>
+        </div>
+      </div>
+
+      <app-submission-table
+        [submissions]="submissions"
+        (edit)="onEdit($event)"
+        (delete)="onDelete($event)"
+      ></app-submission-table>
+
+      @if (editingSubmission) {
+        <app-edit-modal
+          [submission]="editingSubmission"
+          (save)="onSave($event)"
+          (cancel)="onCancelEdit()"
+        ></app-edit-modal>
+      }
+    </div>
+  }
+</div>

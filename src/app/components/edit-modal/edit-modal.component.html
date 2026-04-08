@@ -1,0 +1,91 @@
+<div class="modal-overlay" (click)="onOverlayClick($event)">
+  <div class="modal-card">
+    <h2 class="modal-title">Edit Submission</h2>
+
+    <form [formGroup]="form" (ngSubmit)="onSave()">
+      <div class="form-group">
+        <label for="editFullName">Full Name</label>
+        <input
+          id="editFullName"
+          type="text"
+          formControlName="fullName"
+          placeholder="Enter full name"
+          maxlength="100"
+        />
+        @if (form.get('fullName')?.invalid && form.get('fullName')?.touched) {
+          <div class="error-message">
+            @if (form.get('fullName')?.errors?.['required']) {
+              <span>Full Name is required.</span>
+            }
+            @if (form.get('fullName')?.errors?.['maxlength']) {
+              <span>Full Name must be at most 100 characters.</span>
+            }
+            @if (form.get('fullName')?.errors?.['pattern']) {
+              <span>Full Name must contain only alphabets and spaces.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="editEmail">Email</label>
+        <input
+          id="editEmail"
+          type="email"
+          formControlName="email"
+          placeholder="Email address"
+          readonly
+          class="readonly-field"
+        />
+        <span class="hint-text">Email cannot be changed.</span>
+      </div>
+
+      <div class="form-group">
+        <label for="editMobile">Mobile</label>
+        <input
+          id="editMobile"
+          type="text"
+          formControlName="mobile"
+          placeholder="Enter 10-digit mobile number"
+          maxlength="10"
+        />
+        @if (form.get('mobile')?.invalid && form.get('mobile')?.touched) {
+          <div class="error-message">
+            @if (form.get('mobile')?.errors?.['required']) {
+              <span>Mobile number is required.</span>
+            }
+            @if (form.get('mobile')?.errors?.['pattern']) {
+              <span>Mobile number must be exactly 10 digits.</span>
+            }
+          </div>
+        }
+      </div>
+
+      <div class="form-group">
+        <label for="editDepartment">Department</label>
+        <select id="editDepartment" formControlName="department">
+          <option value="" disabled>Select a department</option>
+          @for (dept of departments; track dept) {
+            <option [value]="dept">{{ dept }}</option>
+          }
+        </select>
+        @if (form.get('department')?.invalid && form.get('department')?.touched) {
+          <div class="error-message">
+            @if (form.get('department')?.errors?.['required']) {
+              <span>Department is required.</span>
+            }
+          </div>
+        }
+      </div>
+
+      @if (errorMessage) {
+        <div class="form-error-banner">{{ errorMessage }}</div>
+      }
+
+      <div class="modal-actions">
+        <button type="button" class="btn-cancel" (click)="onCancel()">Cancel</button>
+        <button type="submit" class="btn-save" [disabled]="form.invalid">Save</button>
+      </div>
+    </form>
+  </div>
+</div>

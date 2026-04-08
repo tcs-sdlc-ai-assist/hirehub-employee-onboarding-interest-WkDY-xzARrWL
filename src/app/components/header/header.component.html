@@ -1,0 +1,53 @@
+<nav class="header-nav">
+  <div class="header-container">
+    <a routerLink="/" class="header-brand">
+      <span class="brand-icon">🚀</span>
+      <span class="brand-text">HireHub</span>
+    </a>
+
+    <button
+      class="hamburger-toggle"
+      (click)="toggleMobileMenu()"
+      [attr.aria-expanded]="isMobileMenuOpen"
+      aria-label="Toggle navigation menu"
+    >
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+      <span class="hamburger-bar"></span>
+    </button>
+
+    <div class="nav-links" [class.nav-links--open]="isMobileMenuOpen">
+      <a
+        routerLink="/"
+        routerLinkActive="active-link"
+        [routerLinkActiveOptions]="{ exact: true }"
+        class="nav-link"
+        (click)="closeMobileMenu()"
+      >
+        Home
+      </a>
+      <a
+        routerLink="/apply"
+        routerLinkActive="active-link"
+        class="nav-link"
+        (click)="closeMobileMenu()"
+      >
+        Apply
+      </a>
+      <a
+        routerLink="/admin"
+        routerLinkActive="active-link"
+        class="nav-link"
+        (click)="closeMobileMenu()"
+      >
+        Admin
+      </a>
+
+      @if (isAdmin) {
+        <button class="nav-btn nav-btn--logout" (click)="onLogout()">
+          Logout
+        </button>
+      }
+    </div>
+  </div>
+</nav>

@@ -1,0 +1,39 @@
+<div class="submission-table-container">
+  @if (submissions.length === 0) {
+    <div class="empty-message">
+      <p>No submissions yet.</p>
+    </div>
+  } @else {
+    <div class="table-wrapper">
+      <table class="submissions-table">
+        <thead>
+          <tr>
+            <th>#</th>
+            <th>Full Name</th>
+            <th>Email</th>
+            <th>Mobile</th>
+            <th>Department</th>
+            <th>Submitted At</th>
+            <th>Actions</th>
+          </tr>
+        </thead>
+        <tbody>
+          @for (submission of submissions; track submission.id; let i = $index) {
+            <tr>
+              <td data-label="#">{{ i + 1 }}</td>
+              <td data-label="Full Name">{{ submission.fullName }}</td>
+              <td data-label="Email">{{ submission.email }}</td>
+              <td data-label="Mobile">{{ submission.mobile }}</td>
+              <td data-label="Department">{{ submission.department }}</td>
+              <td data-label="Submitted At">{{ submission.submittedAt | date:'medium' }}</td>
+              <td data-label="Actions" class="actions-cell">
+                <button class="btn btn-edit" (click)="onEdit(submission)" type="button">Edit</button>
+                <button class="btn btn-delete" (click)="onDelete(submission)" type="button">Delete</button>
+              </td>
+            </tr>
+          }
+        </tbody>
+      </table>
+    </div>
+  }
+</div>
